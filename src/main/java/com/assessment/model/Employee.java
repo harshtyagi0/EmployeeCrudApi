@@ -11,9 +11,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table
 public class Employee {
-
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@NotNull
 	private String name;
@@ -21,7 +20,7 @@ public class Employee {
 	private String phone;
 	@NotNull
 	private String designation;
-
+	@NotNull
 	private String tech;
 	@NotNull
 	private double salary;

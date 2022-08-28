@@ -8,7 +8,6 @@ public class EmpCurdApi2Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EmpCurdApi2Application.class, args);
-		System.out.println("hello");
 	}
 
 }

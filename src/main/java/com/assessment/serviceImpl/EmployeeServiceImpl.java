@@ -24,17 +24,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> employees = new ArrayList<Employee>();
 		employeeRepository.findAll().forEach((employee) -> employees.add(employee));
 		List<EmployeeModel> employeesModel = new ArrayList<EmployeeModel>();
-		for (Employee e : employees) {
-			EmployeeModel em = new EmployeeModel();
-			em.setId(e.getId());
-			em.setName(e.getName());
-			em.setDesignation(e.getDesignation());
-			em.setPhone(e.getPhone());
-			em.setSalary(e.getSalary());
-			em.setTech(e.getTech());
-			em.setEmail(e.getEmail());
-
-			employeesModel.add(em);
+		try {
+			for (Employee e : employees) {
+				EmployeeModel em = new EmployeeModel();
+				em.setId(e.getId());
+				em.setName(e.getName());
+				em.setDesignation(e.getDesignation());
+				em.setPhone(e.getPhone());
+				em.setSalary(e.getSalary());
+				em.setTech(e.getTech());
+				em.setEmail(e.getEmail());
+				employeesModel.add(em);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return employeesModel;
 	}
@@ -46,6 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		try {
 			employee = employeeRepository.findById(id).get();
 		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 
 		EmployeeModel em = new EmployeeModel();
@@ -62,7 +66,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Boolean createEmployee(EmployeeModel employeeModel) {
 		Employee employee = new Employee();
-		employee.setId(getAllEmployees().size());
 		employee.setName(employeeModel.getName());
 		employee.setEmail(employeeModel.getEmail());
 		employee.setDesignation(employeeModel.getDesignation());
@@ -101,12 +104,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 			e.printStackTrace();
 		}
 		return false;
-
 	}
 
 	@Override
 	public Boolean deleteEmployeeById(int id) {
-//		Employee deleteEmployee = employeeRepository.findById(id).get();
 		try {
 			employeeRepository.deleteById(id);
 			return true;
@@ -114,7 +115,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 			e.printStackTrace();
 		}
 		return false;
-
 	}
 
 }

@@ -2,6 +2,8 @@ package com.assessment.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,12 +37,12 @@ public class EmployeeController {
 	}
 
 	@PostMapping
-	private boolean saveEmp(@RequestBody EmployeeModel employee) {
+	private boolean saveEmp(@Valid @RequestBody EmployeeModel employee) {
 		return emService.createEmployee(employee);
 	}
 	
 	@PutMapping("/{id}")
-	private boolean updateEmp(@PathVariable("id") int id, @RequestBody EmployeeModel employeeDetails) {
+	private boolean updateEmp(@Valid @PathVariable("id") int id, @RequestBody EmployeeModel employeeDetails) {
 		return emService.updateEmployee(id, employeeDetails);
 	}
 	

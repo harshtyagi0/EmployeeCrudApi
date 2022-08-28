@@ -2,7 +2,6 @@ package com.assessment.service;
 
 import java.util.List;
 
-import com.assessment.model.Employee;
 import com.assessment.model.EmployeeModel;
 
 public interface EmployeeService {
