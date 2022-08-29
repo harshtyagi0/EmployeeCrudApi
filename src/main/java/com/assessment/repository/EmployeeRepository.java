@@ -12,7 +12,7 @@ import com.assessment.model.Employee;
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	
 	@Query("SELECT e FROM Employee e WHERE e.email= ?1")
-	Optional<Employee> findFirstByEmailId(String email);
+	Employee findFirstByEmailId(String email);
 
 
 }

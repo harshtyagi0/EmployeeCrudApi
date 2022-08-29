@@ -2,6 +2,8 @@ package com.assessment.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,7 +39,7 @@ public class EmployeeController {
 	}
 
 	@PostMapping
-	private ResponseEntity<EmployeeModel> saveEmp(@Validated @RequestBody EmployeeModel employee) {
+	private ResponseEntity<EmployeeModel> saveEmp(@Valid @RequestBody EmployeeModel employee) {
 		return ResponseEntity.ok().body(emService.createEmployee(employee));
 	}
 	

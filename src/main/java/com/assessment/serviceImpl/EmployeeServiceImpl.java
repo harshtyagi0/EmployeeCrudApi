@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 
 import com.assessment.exception.UserAlredyExist;
@@ -57,8 +59,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public EmployeeModel createEmployee(EmployeeModel employeeModel) {
-		Employee e  = employeeRepository.findFirstByEmailId(employeeModel.getEmail()).get();
+	public EmployeeModel createEmployee(@Valid EmployeeModel employeeModel) {
+		Employee e  = employeeRepository.findFirstByEmailId(employeeModel.getEmail());
 		if(Objects.nonNull(e)) {
 			throw new UserAlredyExist("User Alredy Exist with email : "+e.getEmail());
 		}
