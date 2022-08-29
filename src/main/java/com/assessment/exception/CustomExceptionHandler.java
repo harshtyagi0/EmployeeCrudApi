@@ -19,25 +19,31 @@ public class CustomExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public Map<String, String> handelValidationExceptions(MethodArgumentNotValidException ex) {
 		Map<String, String> errors = new HashMap<>();
-		ex.getBindingResult().getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));;
+		ex.getBindingResult().getFieldErrors()
+				.forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+		;
 		return errors;
 	}
-	
+
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(RollbackException.class)
 	public Map<String, String> handelRollBackExceptions(RollbackException ex) {
 		Map<String, String> errors = new HashMap<>();
-		
-//		ex.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));;
+		errors.put("error", ex.getMessage());
+		return errors;
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(ConstraintViolationException.class)
+	public Map<String, String> handelConstraintViolationException(ConstraintViolationException ex) {
+		Map<String, String> errors = new HashMap<>();
 		errors.put("error", ex.getMessage());
 		return errors;
 	}
 	
-//	ConstraintViolationException
-	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(ConstraintViolationException.class)
-	public Map<String, String> handelConstraintViolationException(ConstraintViolationException ex) {
+	@ExceptionHandler(UserAlredyExist.class)
+	public Map<String, String> handelUserAlredyExist(UserAlredyExist ex) {
 		Map<String, String> errors = new HashMap<>();
 		errors.put("error", ex.getMessage());
 		return errors;

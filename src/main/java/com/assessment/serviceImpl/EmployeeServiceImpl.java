@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
+import com.assessment.exception.UserAlredyExist;
 import com.assessment.model.Employee;
 import com.assessment.model.EmployeeModel;
 import com.assessment.repository.EmployeeRepository;
@@ -57,10 +58,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public EmployeeModel createEmployee(EmployeeModel employeeModel) {
-//		Employee e  = employeeRepository.findFirstByEmailId(employeeModel.getEmail()).get();
-//		if(Objects.nonNull(e)) {
-//			return null;
-//		}
+		Employee e  = employeeRepository.findFirstByEmailId(employeeModel.getEmail()).get();
+		if(Objects.nonNull(e)) {
+			throw new UserAlredyExist("User Alredy Exist with email : "+e.getEmail());
+		}
 		Employee employee = new Employee();
 		employee.setName(employeeModel.getName());
 		employee.setEmail(employeeModel.getEmail());
@@ -68,7 +69,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee.setPhone(employeeModel.getPhone());
 		employee.setSalary(employeeModel.getSalary());
 		employee.setTech(employeeModel.getTech());
-
 		employeeRepository.save(employee);
 		return employeeModel;
 
