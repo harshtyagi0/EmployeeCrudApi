@@ -60,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public EmployeeModel createEmployee(EmployeeModel employeeModel) {
 		Employee e  = employeeRepository.findFirstByEmailId(employeeModel.getEmail()).get();
 		if(Objects.nonNull(e)) {
-			throw new UserAlredyExist("Please check your email as User Alredy Exist with email : "+e.getEmail());
+			throw new UserAlredyExist("User Alredy Exist with email : "+e.getEmail());
 		}
 		Employee employee = new Employee();
 		employee.setName(employeeModel.getName());
