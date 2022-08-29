@@ -2,6 +2,7 @@ package com.assessment.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
@@ -24,33 +25,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 		List<Employee> employees = new ArrayList<Employee>();
 		employeeRepository.findAll().forEach((employee) -> employees.add(employee));
 		List<EmployeeModel> employeesModel = new ArrayList<EmployeeModel>();
-		try {
-			for (Employee e : employees) {
-				EmployeeModel em = new EmployeeModel();
-				em.setId(e.getId());
-				em.setName(e.getName());
-				em.setDesignation(e.getDesignation());
-				em.setPhone(e.getPhone());
-				em.setSalary(e.getSalary());
-				em.setTech(e.getTech());
-				em.setEmail(e.getEmail());
-				employeesModel.add(em);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+
+		for (Employee e : employees) {
+			EmployeeModel em = new EmployeeModel();
+			em.setId(e.getId());
+			em.setName(e.getName());
+			em.setDesignation(e.getDesignation());
+			em.setPhone(e.getPhone());
+			em.setSalary(e.getSalary());
+			em.setTech(e.getTech());
+			em.setEmail(e.getEmail());
+			employeesModel.add(em);
 		}
 		return employeesModel;
 	}
 
 	@Override
 	public EmployeeModel getEmployeeById(int id) {
-		Employee employee = null;
-
-		try {
-			employee = employeeRepository.findById(id).get();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+		Employee employee = employeeRepository.findById(id).get();
 
 		EmployeeModel em = new EmployeeModel();
 		em.setId(employee.getId());
@@ -64,7 +56,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Boolean createEmployee(EmployeeModel employeeModel) {
+	public EmployeeModel createEmployee(EmployeeModel employeeModel) {
+//		Employee e  = employeeRepository.findFirstByEmailId(employeeModel.getEmail()).get();
+//		if(Objects.nonNull(e)) {
+//			return null;
+//		}
 		Employee employee = new Employee();
 		employee.setName(employeeModel.getName());
 		employee.setEmail(employeeModel.getEmail());
@@ -72,49 +68,34 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employee.setPhone(employeeModel.getPhone());
 		employee.setSalary(employeeModel.getSalary());
 		employee.setTech(employeeModel.getTech());
-		try {
-			employeeRepository.save(employee);
 
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
+		employeeRepository.save(employee);
+		return employeeModel;
 
 	}
 
 	@Override
-	public Boolean updateEmployee(int id, EmployeeModel employeeDetails) {
+	public EmployeeModel updateEmployee(int id, EmployeeModel employeeDetails) {
 		Employee updateEmployee = null;
-		try {
-			updateEmployee = employeeRepository.findById(id).get();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
+		updateEmployee = employeeRepository.findById(id).get();
+
 		updateEmployee.setName(employeeDetails.getName());
 		updateEmployee.setEmail(employeeDetails.getEmail());
 		updateEmployee.setDesignation(employeeDetails.getDesignation());
 		updateEmployee.setPhone(employeeDetails.getPhone());
 		updateEmployee.setSalary(employeeDetails.getSalary());
 		updateEmployee.setTech(employeeDetails.getTech());
-		try {
-			employeeRepository.save(updateEmployee);
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
+
+		employeeRepository.save(updateEmployee);
+		return employeeDetails;
 	}
 
 	@Override
-	public Boolean deleteEmployeeById(int id) {
-		try {
-			employeeRepository.deleteById(id);
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
+	public int deleteEmployeeById(int id) {
+		employeeRepository.deleteById(id);
+		return id;
+
 	}
 
 }

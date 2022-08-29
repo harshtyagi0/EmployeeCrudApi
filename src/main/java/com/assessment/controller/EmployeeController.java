@@ -2,8 +2,8 @@ package com.assessment.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,28 +27,28 @@ public class EmployeeController {
 	}
 
 	@GetMapping
-	private List<EmployeeModel> getAll() {
-		return emService.getAllEmployees();
+	private ResponseEntity<List<EmployeeModel>> getAll() {
+		return ResponseEntity.ok().body(emService.getAllEmployees());
 	}
 
 	@GetMapping("/{id}")
-	private EmployeeModel getEmployee(@PathVariable("id") int id) {
-		return emService.getEmployeeById(id);
+	private ResponseEntity<EmployeeModel> getEmployee(@PathVariable("id") int id) {
+		return ResponseEntity.ok().body(emService.getEmployeeById(id));
 	}
 
 	@PostMapping
-	private boolean saveEmp(@Valid @RequestBody EmployeeModel employee) {
-		return emService.createEmployee(employee);
+	private ResponseEntity<EmployeeModel> saveEmp(@Validated @RequestBody EmployeeModel employee) {
+		return ResponseEntity.ok().body(emService.createEmployee(employee));
 	}
 	
 	@PutMapping("/{id}")
-	private boolean updateEmp(@Valid @PathVariable("id") int id, @RequestBody EmployeeModel employeeDetails) {
-		return emService.updateEmployee(id, employeeDetails);
+	private ResponseEntity<EmployeeModel> updateEmp(@Validated @PathVariable("id") int id, @RequestBody EmployeeModel employeeDetails) {
+		return ResponseEntity.ok().body(emService.updateEmployee(id, employeeDetails));
 	}
 	
 	@DeleteMapping("/{id}")
-	private boolean deleteEmp(@PathVariable("id") int id) {
-		return emService.deleteEmployeeById(id);
+	private ResponseEntity<Integer> deleteEmp(@PathVariable("id") int id) {
+		return ResponseEntity.ok().body(emService.deleteEmployeeById(id));
 	}
 
 }
