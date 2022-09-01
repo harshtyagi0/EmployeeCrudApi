@@ -39,17 +39,17 @@ public class EmployeeController {
 	}
 
 	@PostMapping
-	private ResponseEntity<EmployeeModel> saveEmp(@Valid @RequestBody EmployeeModel employee) {
+	private ResponseEntity<Boolean> saveEmp(@Valid @RequestBody EmployeeModel employee) {
 		return ResponseEntity.ok().body(emService.createEmployee(employee));
 	}
-	
-	@PutMapping("/{id}")
-	private ResponseEntity<EmployeeModel> updateEmp(@Validated @PathVariable("id") int id, @RequestBody EmployeeModel employeeDetails) {
-		return ResponseEntity.ok().body(emService.updateEmployee(id, employeeDetails));
+
+	@PutMapping
+	private ResponseEntity<Boolean> updateEmp(@Validated @RequestBody EmployeeModel employeeDetails) {
+		return ResponseEntity.ok().body(emService.updateEmployee(employeeDetails));
 	}
-	
+
 	@DeleteMapping("/{id}")
-	private ResponseEntity<Integer> deleteEmp(@PathVariable("id") int id) {
+	private ResponseEntity<Boolean> deleteEmp(@PathVariable("id") int id) {
 		return ResponseEntity.ok().body(emService.deleteEmployeeById(id));
 	}
 

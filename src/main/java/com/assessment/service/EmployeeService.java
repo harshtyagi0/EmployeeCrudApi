@@ -10,11 +10,12 @@ public interface EmployeeService {
 	
 	EmployeeModel getEmployeeById(int id);
 	
-	EmployeeModel createEmployee(EmployeeModel employeeModel);
+	boolean createEmployee(EmployeeModel employeeModel);
 	
-	EmployeeModel updateEmployee(int id, EmployeeModel employeeDetails);
+	boolean updateEmployee( EmployeeModel employeeDetails);
 	
-	int deleteEmployeeById(int id);
+	boolean deleteEmployeeById(int id);
 	
 
 }
+

@@ -1,13 +1,24 @@
 package com.assessment.model;
 
+import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
 public class EmployeeModel {
 
+	@Id
 	private int id;
+	@NotNull
 	private String name;
+	@NotNull
 	private String phone;
+	@NotNull
 	private String designation;
+	@NotNull
 	private String tech;
+	@NotNull
 	private double salary;
+	@Email
 	private String email;
 
 	public String getEmail() {

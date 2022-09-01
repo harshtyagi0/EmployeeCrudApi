@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
+	String error = "error";
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public Map<String, String> handelValidationExceptions(MethodArgumentNotValidException ex) {
 		Map<String, String> errors = new HashMap<>();
 		ex.getBindingResult().getFieldErrors()
-				.forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
-		;
+				.forEach(e -> errors.put(e.getField(), e.getDefaultMessage()));
 		return errors;
 	}
 
@@ -29,7 +29,7 @@ public class CustomExceptionHandler {
 	@ExceptionHandler(RollbackException.class)
 	public Map<String, String> handelRollBackExceptions(RollbackException ex) {
 		Map<String, String> errors = new HashMap<>();
-		errors.put("error", ex.getMessage());
+		errors.put(error, ex.getMessage());
 		return errors;
 	}
 
@@ -37,15 +37,23 @@ public class CustomExceptionHandler {
 	@ExceptionHandler(ConstraintViolationException.class)
 	public Map<String, String> handelConstraintViolationException(ConstraintViolationException ex) {
 		Map<String, String> errors = new HashMap<>();
-		errors.put("error", ex.getMessage());
+		errors.put(error, ex.getMessage());
 		return errors;
 	}
-	
+
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(UserAlredyExist.class)
 	public Map<String, String> handelUserAlredyExist(UserAlredyExist ex) {
 		Map<String, String> errors = new HashMap<>();
-		errors.put("error", ex.getMessage());
+		errors.put(error, ex.getMessage());
+		return errors;
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(UserNotExist.class)
+	public Map<String, String> handelUserNotExist(UserNotExist ex) {
+		Map<String, String> errors = new HashMap<>();
+		errors.put(error, ex.getMessage());
 		return errors;
 	}
 
