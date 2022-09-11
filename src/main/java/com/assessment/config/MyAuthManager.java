@@ -6,7 +6,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.assessment.enitity.MyUser;
+import com.assessment.entity.MyUser;
 import com.assessment.exception.UserNotExist;
 import com.assessment.exception.UserNotFoundException;
 import com.assessment.repository.UserRepository;
@@ -33,7 +33,7 @@ public class MyAuthManager implements AuthenticationManager {
 			throw new UserNotFoundException("User Not Found");
 		}
 
-		MyUserAuthentication myUserAuthentication = new MyUserAuthentication(userName, password);
+		MyUserAuthentication myUserAuthentication = new MyUserAuthentication(userName, password, user.getRoles());
 		myUserAuthentication.setAuthenticated(true);
 		return myUserAuthentication;
 	}

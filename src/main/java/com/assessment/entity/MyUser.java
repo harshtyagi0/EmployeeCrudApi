@@ -1,8 +1,9 @@
-package com.assessment.model;
+package com.assessment.entity;
 
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,30 +11,38 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-public class MyUserModel {
+@Entity
+@Table
+public class MyUser {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@NotBlank
 	private String userName;
 	@NotBlank
 	private String password;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "my_user_roles", joinColumns = {
-			@JoinColumn(name = "my_user_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "my_role_id", referencedColumnName = "roleId") })
-	private List<MyRoleModel> rolesModel;
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinTable(name = "my_user_roles", 
+		joinColumns = {
+				@JoinColumn(name = "my_user_id", referencedColumnName = "id") 
+		}, 
+		inverseJoinColumns = {
+						@JoinColumn(name = "my_role_id", referencedColumnName = "roleId") 
+						}
+	)
+	private List<MyRoles> roles;
 
-	public List<MyRoleModel> getRolesModel() {
-		return rolesModel;
+	public List<MyRoles> getRoles() {
+		return roles;
 	}
 
-	public void setRolesModel(List<MyRoleModel> rolesModel) {
-		this.rolesModel = rolesModel;
+	public void setRoles(List<MyRoles> roles) {
+		this.roles = roles;
 	}
 
 	public int getId() {

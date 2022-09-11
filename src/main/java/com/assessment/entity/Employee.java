@@ -1,4 +1,4 @@
-package com.assessment.enitity;
+package com.assessment.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Table
 public class Employee {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@NotBlank
 	private String name;

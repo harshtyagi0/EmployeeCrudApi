@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.assessment.enitity.Employee;
+import com.assessment.entity.Employee;
 import com.assessment.exception.UserAlredyExist;
 import com.assessment.exception.UserNotExist;
 import com.assessment.model.EmployeeModel;

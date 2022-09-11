@@ -1,9 +1,13 @@
 package com.assessment.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.assessment.enitity.MyUser;
+import com.assessment.entity.MyRoles;
+import com.assessment.entity.MyUser;
 import com.assessment.model.MyUserModel;
 import com.assessment.repository.UserRepository;
 import com.assessment.service.UserService;
@@ -24,10 +28,19 @@ public class UserServiceImpl implements UserService {
 		user.setId(userModel.getId());
 		user.setUserName(userModel.getUserName());
 		user.setPassword(passwordEncoder.encode(userModel.getPassword()));
+		List<MyRoles> roles = new ArrayList<>();
+		userModel.getRolesModel().stream().forEach(rM -> {
+			MyRoles myRole = new MyRoles();
+			myRole.setRole(rM.getRole());
+			myRole.setRoleId(rM.getRoleId());
+			roles.add(myRole);
+		});
+		user.setRoles(roles);
 		try {
 			userRepository.save(user);
 			return true;
 		} catch (Exception e) {
+			System.out.println(e);
 			return false;
 		}
 	}
