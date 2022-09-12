@@ -30,17 +30,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
-				   .authorizeRequests()
-				   .antMatchers("/user").permitAll()
-				   .antMatchers(HttpMethod.POST, "/employee").hasAuthority("HR")
-				   .anyRequest().authenticated()
-				   .and()
-				   .exceptionHandling()
-				   .authenticationEntryPoint(securityExceptionHandler)
-				   .accessDeniedHandler(securityExceptionHandler)
-				   .and()
-				   .httpBasic();
+		http.csrf().disable().authorizeRequests().antMatchers("/user").permitAll()
+				.antMatchers(HttpMethod.POST, "/employee").hasAuthority("HR")
+				.antMatchers(HttpMethod.GET, "/employee/*").hasAnyAuthority("HR","Employee")
+				.antMatchers(HttpMethod.PUT, "/employee").hasAuthority("Employee")
+				.antMatchers(HttpMethod.DELETE, "/employee/*").hasAuthority("HR")
+				.antMatchers(HttpMethod.GET, "/employee").hasAnyAuthority("HR","Admin")
+				.anyRequest().authenticated().and()
+				.exceptionHandling().authenticationEntryPoint(securityExceptionHandler)
+				.accessDeniedHandler(securityExceptionHandler).and().httpBasic();
 	}
 
 }
