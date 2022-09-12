@@ -11,9 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import com.assessment.entity.MyRoles;
 
 public class MyUserAuthentication implements Authentication {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private final String principal; // user name
 	private final String password; // credentials
