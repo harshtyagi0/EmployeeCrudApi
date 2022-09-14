@@ -7,7 +7,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
+
+import com.assessment.filter.JwtFilter;
 
 @SuppressWarnings("deprecation")
 @Configuration
@@ -17,10 +21,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	final MyAuthManager myAuthManager;
 	private final SecurityProblemSupport securityExceptionHandler;
+	private final JwtFilter jwtFilter;
 
-	public SecurityConfig(MyAuthManager myAuthManager, SecurityProblemSupport securityExceptionHandler) {
+	public SecurityConfig(MyAuthManager myAuthManager, SecurityProblemSupport securityExceptionHandler, JwtFilter jwtFilter) {
 		this.myAuthManager = myAuthManager;
 		this.securityExceptionHandler = securityExceptionHandler;
+		this.jwtFilter = jwtFilter;
 	}
 
 	@Override
@@ -38,7 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/employee").hasAnyAuthority("HR","Admin")
 				.anyRequest().authenticated().and()
 				.exceptionHandling().authenticationEntryPoint(securityExceptionHandler)
-				.accessDeniedHandler(securityExceptionHandler).and().httpBasic();
+				.accessDeniedHandler(securityExceptionHandler).and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 
 }

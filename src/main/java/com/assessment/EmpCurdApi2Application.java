@@ -3,6 +3,8 @@ package com.assessment;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
@@ -16,5 +18,9 @@ public class EmpCurdApi2Application {
 	BCryptPasswordEncoder passEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	@Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return authenticationManagerBean();
+    }
 
 }
