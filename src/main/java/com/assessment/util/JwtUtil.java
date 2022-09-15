@@ -3,7 +3,6 @@ package com.assessment.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.assessment.config.MyUserAuthentication;
@@ -38,10 +37,11 @@ public class JwtUtil {
 		return extractExpiration(token).before(new Date());
 	}
 
-	public String generateToken(UserDetails userDetails) {
+	public String generateToken(MyUserAuthentication myUserAuthentication) {
 		Map<String, Object> claims = new HashMap<>();
-		return createToken(claims, userDetails.getUsername());
+		return createToken(claims, myUserAuthentication.getPrincipal().toString());
 	}
+	
 
 	private String createToken(Map<String, Object> claims, String subject) {
 
